@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sweety/Services/Auth/AuthService.dart';
+import 'package:sweety/Views/RegisterView.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -18,31 +20,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      brightness: Brightness.dark,
-      flexibleSpace: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-              bottomRight: Radius.circular(40)),
-          gradient: LinearGradient(
-              colors: [Color.fromARGB(255, 87, 146, 205), Colors.pink],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter),
-        ),
-      ),
-      title: Text(
-        'Sweets',
-        style: TextStyle(color: Colors.white),
-      ),
-      centerTitle: true,
-    ));
+    return FutureBuilder(
+      future: Authservice.firebase().Initialize(),
+      builder: ((context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return const Scaffold(
+              body: CircularProgressIndicator(),
+            );
+
+          case ConnectionState.done:
+            return const RegisterView();
+          default:
+            return const CircularProgressIndicator();
+        }
+      }),
+    );
   }
 }
