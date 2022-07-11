@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "634485010598",
+    "project_id": "sweety-1554dd-212app",
+    "storage_bucket": "sweety-1554dd-212app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634485010598:android:da24c9f6218eafea210467",
+        "android_client_info": {
+          "package_name": "com.example.sweety"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634485010598-s16cvmrl3a7lk8ogqbh92ed4v49poo69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNxkGEX24FyoKXPIUeuhWfhFezG2LQmE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "634485010598-s16cvmrl3a7lk8ogqbh92ed4v49poo69.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
