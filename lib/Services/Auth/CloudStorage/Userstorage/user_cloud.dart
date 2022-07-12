@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Userstorage/userconsts.dart';
-import 'package:sweety/Services/Auth/CloudStorage/new_user.dart';
+import 'package:sweety/Services/Auth/CloudStorage/Userstorage/new_user.dart';
 
-class FirebaseCloudStorage {
+class FirebaseCloudStorageforusers {
   final users = FirebaseFirestore.instance.collection('users');
 
   Future<User_cloud?> create_user(
@@ -17,7 +17,6 @@ class FirebaseCloudStorage {
       user_lastname: lastname,
       user_occupation: occupation
     });
-    final user = document.get();
     return User_cloud(
         docid: document.id,
         email: email,

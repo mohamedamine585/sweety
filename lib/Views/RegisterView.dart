@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sweety/Services/Auth/AuthService.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Userstorage/user_cloud.dart';
-import 'package:sweety/Services/Auth/CloudStorage/new_user.dart';
+import 'package:sweety/Services/Auth/CloudStorage/Userstorage/new_user.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -107,7 +107,7 @@ class _RegisterViewState extends State<RegisterView> {
                   final user = await Authservice.firebase()
                       .Register(email: email.text, password: password.text);
                   if (user != null) {
-                    await FirebaseCloudStorage().create_user(
+                    await FirebaseCloudStorageforusers().create_user(
                         email: email.text,
                         firstname: firstname.text,
                         lastname: lastname.text,
