@@ -22,7 +22,8 @@ class FirebaseCloudStorageforusers {
         email: email,
         firstname: firstname,
         lastname: lastname,
-        occupation: occupation);
+        occupation: occupation,
+        ispublisher: false);
   }
 
   Future<User_cloud?> get_user({required String email}) async {
