@@ -49,4 +49,9 @@ class FirebaseFirestoreforbooks$users {
     await update_bookinfo(
         bookname: Book.name, Edition: Book.Edition, sold: Book.sold + 1);
   }
+
+  Stream<Iterable<book>> getallbooks() =>
+      books.snapshots().map((event) => event.docs
+          .map((doc) => book.fromsnapshot(doc))
+          .where((Book) => Book != null));
 }

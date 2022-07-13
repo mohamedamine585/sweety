@@ -24,7 +24,7 @@ class Authservice implements Authprovider {
   Future<Authuser?> Loginwithaccount(
       {required String email, required String password}) async {
     try {
-      await provider.Loginwithaccount(email: email, password: password);
+      return await provider.Loginwithaccount(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'wrong-password')
         throw wrogpasswordex;

@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sweety/Services/Auth/CloudStorage/books_storage/a_book.dart';
 import 'package:sweety/Services/Auth/CloudStorage/books_storage/bookconst.dart';
 
-class Firebasecloudstorageforbooks {
+class Firebasecloudstorageforbooks$pubs {
   final books = FirebaseFirestore.instance.collection('books');
 
   Future<book?> create_book({
@@ -58,12 +58,6 @@ class Firebasecloudstorageforbooks {
     return null;
   }
 
-  Stream<Iterable<book>>? getbooks_byname({required String Bookname}) {
-    return books.snapshots().map((event) => event.docs
-        .map((doc) => book.fromsnapshot(doc))
-        .where((Book) => Book.name == bookname));
-  }
-
   Future<book> get_a_book(
       {required String Bookname, required String Edition}) async {
     return await books
@@ -78,10 +72,10 @@ class Firebasecloudstorageforbooks {
         .where((Book) => Book.authorname == authorname));
   }
 
-  Stream<Iterable<book>>? getbooks_bytype({required String Bookname}) {
+  Stream<Iterable<book>>? getbooks_bypubs({required String email}) {
     return books.snapshots().map((event) => event.docs
         .map((doc) => book.fromsnapshot(doc))
-        .where((Book) => Book.name == bookname));
+        .where((Book) => Book.publisheremail == email));
   }
 
   Future<void> delete_a_publishedbook(
@@ -105,7 +99,7 @@ class Firebasecloudstorageforbooks {
         author_name: authorname,
         Description: description,
         Type: type,
-        date_of_edition: dateofedition
+        date_of_edition: dateofedition,
       });
     }
   }

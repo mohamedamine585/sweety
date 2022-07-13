@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:sweety/Services/Auth/AuthService.dart';
+import 'package:sweety/Views/Addbookview.dart';
+import 'package:sweety/Views/HomeView.dart';
+import 'package:sweety/Views/LoginView.dart';
 import 'package:sweety/Views/RegisterView.dart';
+import 'package:sweety/Views/publisherwithaccView.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: 'Flutter Demo',
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
-    ),
-    home: const MyHomePage(),
-  ));
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(),
+      routes: {
+        '/publish_a_book': (context) => const Addbookbiew(),
+        '/Loginview': (context) => const LoginView(),
+        '/Registerview': (context) => const RegisterView(),
+        '/HomeView': ((context) => const HomeView()),
+      }));
 }
 
 class MyHomePage extends StatefulWidget {
@@ -32,9 +41,14 @@ class _MyHomePageState extends State<MyHomePage> {
             );
 
           case ConnectionState.done:
-            return const RegisterView();
+            final user = Authservice.firebase().currentuser;
+            if (user == null) {
+              return const LoginView();
+            } else {
+              return const HomeView();
+            }
           default:
-            return const CircularProgressIndicator();
+            return const PublisherwithaccView();
         }
       }),
     );

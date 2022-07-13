@@ -30,7 +30,14 @@ class Firebaseauthprovider implements Authprovider {
   }
 
   @override
-  Authuser? get currentuser => FirebaseAuth.instance.currentUser as Authuser;
+  // TODO: implement currentuser
+  Authuser? get currentuser {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null)
+      return Authuser.fromFirebase(user);
+    else
+      return null;
+  }
 
   @override
   Future<Authuser?> Loginwithaccount(

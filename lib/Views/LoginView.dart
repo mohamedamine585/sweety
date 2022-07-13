@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:sweety/routes.dart';
 
 import '../Services/Auth/AuthService.dart';
 import '../Services/Auth/CloudStorage/Userstorage/user_cloud.dart';
@@ -73,8 +74,13 @@ class _LoginViewState extends State<LoginView> {
           TextButton(
               onPressed: () async {
                 try {
-                  await Authservice.firebase().Loginwithaccount(
+                  final user = await Authservice.firebase().Loginwithaccount(
                       email: email.text, password: password.text);
+                  print(user);
+                  if (user != null) {
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil(homeview, (route) => false);
+                  }
                 } catch (e) {
                   print(e);
                 }
@@ -87,12 +93,27 @@ class _LoginViewState extends State<LoginView> {
               onPressed: () async {
                 try {
                   await Authservice.firebase().loginanonymously();
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(homeview, (route) => false);
                 } catch (e) {
                   print(e);
                 }
               },
               child: const Text(
-                'Continue ananymously',
+                'Continue anonymously',
+                style: TextStyle(color: Color.fromARGB(255, 110, 189, 235)),
+              )),
+          TextButton(
+              onPressed: () async {
+                try {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      registringview, (route) => false);
+                } catch (e) {
+                  print(e);
+                }
+              },
+              child: const Text(
+                "You  haven't an account ",
                 style: TextStyle(color: Color.fromARGB(255, 110, 189, 235)),
               ))
         ]));

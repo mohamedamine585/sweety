@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:sweety/Services/Auth/AuthService.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Userstorage/user_cloud.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Userstorage/new_user.dart';
+import 'package:sweety/routes.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -116,10 +117,25 @@ class _RegisterViewState extends State<RegisterView> {
                 } catch (e) {
                   print(e);
                 }
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(homeview, (route) => false);
               },
               child: Text(
                 'Register',
                 style: TextStyle(color: Color.fromARGB(255, 195, 17, 106)),
+              )),
+          TextButton(
+              onPressed: () async {
+                try {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(loggingview, (route) => false);
+                } catch (e) {
+                  print(e);
+                }
+              },
+              child: const Text(
+                "You already  have  an account ",
+                style: TextStyle(color: Color.fromARGB(255, 110, 189, 235)),
               ))
         ]));
   }

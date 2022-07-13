@@ -55,6 +55,15 @@ class _EmailverificationState extends State<Emailverification> {
                 ),
               ),
             ),
+            Center(
+              child: TextButton(
+                onPressed: ()  {},
+                child: const Text(
+                  'Proceed',
+                  style: TextStyle(color: Color.fromARGB(255, 235, 56, 116)),
+                ),
+              ),
+            ),
           ],
         ));
   }
