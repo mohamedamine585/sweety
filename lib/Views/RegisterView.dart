@@ -136,7 +136,7 @@ class _RegisterViewState extends State<RegisterView> {
               child: const Text(
                 "You already  have  an account ",
                 style: TextStyle(color: Color.fromARGB(255, 110, 189, 235)),
-              ))
+              )),
         ]));
   }
 }

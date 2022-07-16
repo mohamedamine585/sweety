@@ -38,7 +38,7 @@ class book {
       : docid = snapshot.id,
         publisherfirstname = snapshot.data()[Publisherfirstname] as String?,
         publisherlastname = snapshot.data()[Publisherlastname] as String?,
-        publisheremail = snapshot.data()[Publisherlastname] as String?,
+        publisheremail = snapshot.data()[Publisheremail] as String?,
         name = snapshot.data()[bookname] as String,
         authorname = snapshot.data()[author_name] as String,
         dateofeddition = snapshot.data()[date_of_edition] as String,

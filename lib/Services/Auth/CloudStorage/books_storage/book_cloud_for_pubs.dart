@@ -34,6 +34,9 @@ class Firebasecloudstorageforbooks$pubs {
         Readtimes: 0,
         Price: price,
         Sold: 0,
+        Publisheremail: pubemail,
+        Publisherfirstname: pubfname,
+        Publisherlastname: publnam,
       });
 
       return book(
@@ -72,12 +75,6 @@ class Firebasecloudstorageforbooks$pubs {
         .where((Book) => Book.authorname == authorname));
   }
 
-  Stream<Iterable<book>>? getbooks_bypubs({required String email}) {
-    return books.snapshots().map((event) => event.docs
-        .map((doc) => book.fromsnapshot(doc))
-        .where((Book) => Book.publisheremail == email));
-  }
-
   Future<void> delete_a_publishedbook(
       {required String Bookname, required String Edition}) async {
     final _book = await get_a_book(Bookname: Bookname, Edition: Edition);
@@ -85,6 +82,18 @@ class Firebasecloudstorageforbooks$pubs {
       await books.doc(_book.docid).delete();
     }
   }
+
+  Stream<Iterable<book>> getbooks_bypubs({required String email}) {
+    return books.snapshots().map((event) => event.docs
+        .map((doc) => book.fromsnapshot(doc))
+        .toList()
+        .where(((element) => element.publisheremail == email)));
+  }
+
+  Stream<Iterable<book>> getallbooks() =>
+      books.snapshots().map((event) => event.docs
+          .map((doc) => book.fromsnapshot(doc))
+          .where((Book) => Book != null));
 
   Future<void> update_bookinfo(
       {required String bookname,

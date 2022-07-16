@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Publisherstorage/a_publisher.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Publisherstorage/pubs_const.dart';

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Userstorage/userconsts.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Userstorage/new_user.dart';
@@ -18,22 +19,26 @@ class FirebaseCloudStorageforusers {
       user_occupation: occupation
     });
     return User_cloud(
-        docid: document.id,
-        email: email,
-        firstname: firstname,
-        lastname: lastname,
-        occupation: occupation,
-        ispublisher: false);
+      docid: document.id,
+      email: email,
+      firstname: firstname,
+      lastname: lastname,
+      occupation: occupation,
+    );
   }
 
-  Future<User_cloud?> get_user({required String email}) async {
+  Future<Iterable<User_cloud?>?> get_user({required String? email}) async {
     try {
       return await users
-          .where(user_email == email)
+          .where(
+            user_email,
+            isEqualTo: email,
+          )
           .get()
-          .then((value) => value as User_cloud);
+          .then(
+              (value) => value.docs.map((doc) => User_cloud.fromsnapshot(doc)));
     } catch (e) {
-      return null;
+      print(e);
     }
   }
 
@@ -50,7 +55,7 @@ class FirebaseCloudStorageforusers {
   }
 
   Future<void> delete_all_users() async {
-    final allusers = get_all_users().toList() as Iterable<User_cloud>;
+    final allusers = await get_all_users().toList() as Iterable<User_cloud>;
     User_cloud user;
     try {
       for (user in allusers) {

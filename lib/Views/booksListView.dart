@@ -17,16 +17,25 @@ class booklistview extends StatelessWidget {
       itemCount: books.length,
       itemBuilder: (BuildContext context, int index) {
         final thebook = books.elementAt(index);
+        final fname = thebook.publisherfirstname ?? '';
+        final lname = thebook.publisherlastname ?? '';
+        print(thebook.publisheremail);
         return ListTile(
-          title: Text(
-            thebook.name + ' by ' + thebook.authorname,
-            maxLines: 1,
-            softWrap: true,
-            overflow: TextOverflow.ellipsis,
-          ),
-          trailing: IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.info),
+          title: SizedBox(
+            height: 70,
+            child: Column(
+              children: [
+                Text(
+                  thebook.name,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  maxLines: 1,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(fname + ' ' + lname),
+                Text('Price :${thebook.price} dollars'),
+              ],
+            ),
           ),
         );
       },

@@ -1,9 +1,11 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sweety/Services/Auth/AuthService.dart';
+import 'package:sweety/Services/Auth/CloudStorage/Publisherstorage/publisher_cloud.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Userstorage/user_cloud.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Userstorage/userconsts.dart';
 import 'package:sweety/Services/Auth/CloudStorage/books_storage/book_cloud_for_pubs.dart';
@@ -18,8 +20,6 @@ class Addbookbiew extends StatefulWidget {
 
 class _AddbookbiewState extends State<Addbookbiew> {
   late final Firebasecloudstorageforbooks$pubs? books_forpubs;
-  final user = FirebaseCloudStorageforusers()
-      .get_user(email: Authservice.firebase().currentuser!.email);
   late final TextEditingController bname;
   late final TextEditingController autname;
   late final TextEditingController desc;
@@ -111,10 +111,19 @@ class _AddbookbiewState extends State<Addbookbiew> {
                 )),
             TextButton(
               onPressed: () async {
+                final useremail = FirebaseAuth.instance.currentUser!.email;
+
+                final user = await FirebaseCloudStorageforusers().get_user(
+                  email: useremail,
+                );
+                final email = user?.first!.email;
+                final name = user?.first!.firstname;
+                final lname = user?.first!.lastname;
+
                 await books_forpubs?.create_book(
-                    pubfname: user_firstname,
-                    publnam: user_lastname,
-                    pubemail: user_email,
+                    pubfname: name!,
+                    publnam: lname!,
+                    pubemail: email!,
                     name: bname.text,
                     authorname: autname.text,
                     description: desc.text,
