@@ -68,7 +68,7 @@ class _PublisherwithaccViewState extends State<PublisherwithaccView> {
                 case ConnectionState.active:
                   if (snapshot.hasData) {
                     final allbooks = snapshot.data as Iterable<book>;
-                    return booklistview(books: allbooks.toList());
+                    return booklistviewforpubs(books: allbooks.toList());
                   }
                   return const Text('Loading ...');
                 default:

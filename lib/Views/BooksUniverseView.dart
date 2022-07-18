@@ -54,7 +54,9 @@ class _BooksUniverseViewState extends State<BooksUniverseView> {
               case ConnectionState.active:
                 if (snapshot.hasData) {
                   final allbooks = snapshot.data as Iterable<book>;
-                  return booklistview(books: allbooks.toList());
+                  return booklistview(
+                    books: allbooks.toList(),
+                  );
                 }
                 return Text('Loading ...');
               default:

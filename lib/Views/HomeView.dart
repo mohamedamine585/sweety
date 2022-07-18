@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sweety/Services/Auth/AuthService.dart';
 import 'package:sweety/Views/BooksUniverseView.dart';
+import 'package:sweety/Views/Settingsview.dart';
 import 'package:sweety/Views/publisherwithaccView.dart';
 import 'package:sweety/routes.dart';
 
@@ -51,37 +52,7 @@ class _HomeViewState extends State<HomeView> {
       body: <Widget>[
         const BooksUniverseView(),
         const PublisherwithaccView(),
-        Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            brightness: Brightness.dark,
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40)),
-                gradient: LinearGradient(
-                    colors: [Colors.pink, Color.fromARGB(255, 87, 146, 205)],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter),
-              ),
-            ),
-            title: const Text(
-              'settings',
-              style: TextStyle(color: Colors.white),
-            ),
-            centerTitle: true,
-          ),
-          body: TextButton(
-            onPressed: () async {
-              await Authservice.firebase().Logout();
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(loggingview, (route) => false);
-            },
-            child: Text('Logout'),
-          ),
-        ),
+        const settingsview(),
       ][currentPageIndex],
     );
   }

@@ -4,6 +4,7 @@ import 'package:sweety/Views/Addbookview.dart';
 import 'package:sweety/Views/HomeView.dart';
 import 'package:sweety/Views/LoginView.dart';
 import 'package:sweety/Views/RegisterView.dart';
+import 'package:sweety/Views/a_book_view.dart';
 import 'package:sweety/Views/publisherwithaccView.dart';
 
 void main() {
@@ -18,6 +19,7 @@ void main() {
         '/Loginview': (context) => const LoginView(),
         '/Registerview': (context) => const RegisterView(),
         '/HomeView': ((context) => const HomeView()),
+        '/abookview': ((context) => const a_bookview()),
       }));
 }
 

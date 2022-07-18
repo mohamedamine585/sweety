@@ -105,20 +105,21 @@ class _RegisterViewState extends State<RegisterView> {
           TextButton(
               onPressed: () async {
                 try {
-                  final user = await Authservice.firebase()
+                  await Authservice.firebase()
                       .Register(email: email.text, password: password.text);
+
+                  final user = await FirebaseCloudStorageforusers().create_user(
+                      email: email.text,
+                      firstname: firstname.text,
+                      lastname: lastname.text,
+                      occupation: occupation.text);
                   if (user != null) {
-                    await FirebaseCloudStorageforusers().create_user(
-                        email: email.text,
-                        firstname: firstname.text,
-                        lastname: lastname.text,
-                        occupation: occupation.text);
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil(homeview, (route) => false);
                   }
                 } catch (e) {
                   print(e);
                 }
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(homeview, (route) => false);
               },
               child: Text(
                 'Register',
