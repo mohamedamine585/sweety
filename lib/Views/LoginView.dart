@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sweety/Services/Auth/FirebaseAuthservice.dart';
+import 'package:sweety/Services/Auth/blocservice/Blocservice.dart';
+import 'package:sweety/Services/Auth/blocservice/blocevent.dart';
 import 'package:sweety/routes.dart';
 
 import '../Services/Auth/AuthService.dart';
@@ -74,10 +78,11 @@ class _LoginViewState extends State<LoginView> {
           TextButton(
               onPressed: () async {
                 try {
-                  final user = await Authservice.firebase().Loginwithaccount(
-                      email: email.text, password: password.text);
-                  print(user);
-                  if (user != null) {
+                  context
+                      .read<ServiceBloc>()
+                      .add(loginevent(email.text, password.text));
+
+                  if (Authservice.firebase().currentuser != null) {
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil(homeview, (route) => false);
                   }
@@ -106,8 +111,7 @@ class _LoginViewState extends State<LoginView> {
           TextButton(
               onPressed: () async {
                 try {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      registringview, (route) => false);
+                  context.read<ServiceBloc>().add(movetoregisteevent(context));
                 } catch (e) {
                   print(e);
                 }

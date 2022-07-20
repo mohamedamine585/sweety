@@ -3,7 +3,7 @@ import 'package:sweety/Services/Auth/CloudStorage/Publisherstorage/a_publisher.d
 import 'package:sweety/Services/Auth/CloudStorage/Publisherstorage/pubs_const.dart';
 import 'package:sweety/Services/Auth/CloudStorage/books_storage/book_cloud_for_pubs.dart';
 import 'package:sweety/Services/Auth/CloudStorage/books_storage/bookconst.dart';
-import 'package:sweety/Services/Auth/CloudStorage/books_storage/cloud_books_for_users.dart';
+import '../books_storage/cloud_books_for_users.dart';
 import '../books_storage/a_book.dart';
 
 class FirebaseCloudStorageforpublisher {
@@ -28,12 +28,11 @@ class FirebaseCloudStorageforpublisher {
     }
   }
 
-  Future<Publisher?> get_publisher(
-      {required String firstname, required String lastname}) async {
-    return await publishers
-        .where(firstname_pub == firstname && lastname_pub == lastname)
+  Future<Publisher?> get_publisher({required String email}) async {
+    return publishers
+        .where(email_pub, isEqualTo: email)
         .get()
-        .then((value) => value as Publisher);
+        .then((value) => value as Publisher?);
   }
 
   Future<void> deletepublisher({required String publisherid}) async {

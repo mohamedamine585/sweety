@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sweety/Services/Auth/AuthService.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Userstorage/user_cloud.dart';
 import 'package:sweety/Services/Auth/CloudStorage/Userstorage/new_user.dart';
+import 'package:sweety/Services/Auth/FirebaseAuthservice.dart';
+import 'package:sweety/Services/Auth/blocservice/Blocservice.dart';
+import 'package:sweety/Services/Auth/blocservice/blocevent.dart';
 import 'package:sweety/routes.dart';
 
 class RegisterView extends StatefulWidget {
@@ -104,21 +108,18 @@ class _RegisterViewState extends State<RegisterView> {
           ),
           TextButton(
               onPressed: () async {
-                try {
-                  await Authservice.firebase()
-                      .Register(email: email.text, password: password.text);
+                context
+                    .read<ServiceBloc>()
+                    .add(inAuthregisterevent(email.text, password.text));
 
-                  final user = await FirebaseCloudStorageforusers().create_user(
-                      email: email.text,
-                      firstname: firstname.text,
-                      lastname: lastname.text,
-                      occupation: occupation.text);
-                  if (user != null) {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil(homeview, (route) => false);
-                  }
-                } catch (e) {
-                  print(e);
+                final user = await FirebaseCloudStorageforusers().create_user(
+                    email: email.text,
+                    firstname: firstname.text,
+                    lastname: lastname.text,
+                    occupation: occupation.text);
+                if (user != null) {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(homeview, (route) => false);
                 }
               },
               child: Text(

@@ -2,6 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sweety/Services/Auth/FirebaseAuthservice.dart';
+import 'package:sweety/Services/Auth/blocservice/Blocservice.dart';
+import 'package:sweety/Services/Auth/blocservice/blocevent.dart';
 
 import '../Services/Auth/AuthService.dart';
 import '../routes.dart';
@@ -16,6 +20,7 @@ class settingsview extends StatefulWidget {
 class _settingsviewState extends State<settingsview> {
   @override
   Widget build(BuildContext context) {
+    BlocProvider(create: ((context) => ServiceBloc(Firebaseauthprovider())));
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -61,7 +66,7 @@ class _settingsviewState extends State<settingsview> {
           ),
           TextButton(
             onPressed: () async {
-              await Authservice.firebase().Logout();
+              context.read<ServiceBloc>().add(const logoutevent());
               Navigator.of(context)
                   .pushNamedAndRemoveUntil(loggingview, (route) => false);
             },
