@@ -18,11 +18,17 @@ class _publisherviewState extends State<publisherview> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: FirebaseCloudStorageforpublisher().get_publisher(
-            email: FirebaseAuth.instance.currentUser!.email.toString()),
+        future:
+            getpub(email: FirebaseAuth.instance.currentUser!.email.toString()),
         builder: ((context, snapshot) {
-          if (snapshot.data != null) return const publisherwithoutacc();
+          if (snapshot.data != null) return const PublisherwithaccView();
           return const publisherwithoutacc();
         }));
   }
+}
+
+Future<Publisher?> getpub({required String email}) async {
+  final pub = await FirebaseCloudStorageforpublisher().get_publisher(
+      email: FirebaseAuth.instance.currentUser!.email.toString());
+  return pub!.first;
 }

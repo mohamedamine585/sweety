@@ -13,26 +13,28 @@ class FirebaseCloudStorageforpublisher {
     required String Firstname,
     required String Lastname,
   }) async {
-    final similarpubs =
-        get_specific_publishers(fname: Firstname, lname: Lastname);
-    if (await similarpubs.isEmpty) {
-      final document = await publishers.add({
-        email_pub: Email,
-        firstname_pub: Firstname,
-        lastname_pub: Lastname,
-        pubbooks_pub: [],
-      });
-      return Publisher(Email, Firstname, Lastname, document.id, []);
-    } else {
-      print(similarpubs.first);
-    }
+    final document = await publishers.add({
+      email_pub: Email,
+      firstname_pub: Firstname,
+      lastname_pub: Lastname,
+      pubbooks_pub: [],
+    });
+    return Publisher(Email, Firstname, Lastname, document.id);
   }
 
-  Future<Publisher?> get_publisher({required String email}) async {
-    return publishers
-        .where(email_pub, isEqualTo: email)
-        .get()
-        .then((value) => value as Publisher?);
+  Future<Iterable<Publisher?>?> get_publisher({required String? email}) async {
+    try {
+      return await publishers
+          .where(
+            email_pub,
+            isEqualTo: email,
+          )
+          .get()
+          .then(
+              (value) => value.docs.map((doc) => Publisher.fromsnapshot(doc)));
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> deletepublisher({required String publisherid}) async {
@@ -54,11 +56,5 @@ class FirebaseCloudStorageforpublisher {
     return publishers.snapshots().map((event) => event.docs
         .map((doc) => Publisher.fromsnapshot(doc))
         .where((pub) => pub.firstname == fname && pub.lastname == lname));
-  }
-
-  Future<void> publish_e_book(
-      {required Publisher pub, required book Book}) async {
-    pub.pubbooks.add(bookname);
-    await publishers.doc(pub.docid).update({pubbooks_pub: pub.pubbooks});
   }
 }
